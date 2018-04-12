@@ -1,0 +1,73 @@
+﻿@model PokerGame.Models.Game
+@{
+    ViewBag.Title = "Poker";      
+}
+
+<style>
+    .jumbotron {
+        background: #A5C0C9;
+    }
+
+    .row text-center {
+        background: #A5C0C9;
+    }
+
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnNewGameFirst').click(function () {
+            $('#btnNewGameLast').click();
+        });
+    });
+</script>
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="row text-center">
+            <h1>Welcome to Poker Game</h1>
+            <p>
+                @using (Ajax.BeginForm("shuffleCards", "Poker", new AjaxOptions { UpdateTargetId = "dImages" }))
+                {
+                    <button id="btnNewGameLast" style="visibility:hidden;display:none">New Game</button>
+                }
+                <button id="btnNewGameFirst" class="btn btn-primary btn-lg">New Game</button>
+            </p>
+        </div>
+    </header>
+   <div id="dImages">
+       @{Html.RenderPartial("~/Views/Poker/Cards.cshtml", Model.CardsInHand, ViewData);}
+    </div>
+    <div class="row text-center" style="width:100%">        
+        <form class="form-inline">
+            <div class="form-group col-xs-12 col-sm-6 col-md-2 col-lg-2 col-md-offset-1">
+                <label for="lblPair">How many pairs are there?</label>
+                <label id="lblPair" class="form-control"></label>
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                <label for="lblTrio">How many trios are there?</label>
+                <label id="lblTrio" name="lblTrio" class="form-control"></label>
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                <label for="lblLadder">Is there a ladder?</label>
+                <label id="lblLadder" name="lblLadder" class="form-control"></label>
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                <label for="lblPocker">Is there pocker?</label>
+                <label id="lblPocker" name="lblPocker" class="form-control"></label>
+            </div>
+            <div class="form-group col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                <label for="lblColor">Is there color?</label>
+                <label id="lblColor" name="lblColor" class="form-control"></label>
+            </div>
+        </form>        
+    </div>
+</div>
+
+
+
+
+
+
+
+
