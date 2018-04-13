@@ -10,7 +10,6 @@ namespace PokerGame.Models
         int numberCardsInHand = 5;
         public Deck deck { get; set; }
 
-        //public Card[] CardsInHand { get; set; }
         public IEnumerable<Card> CardsInHand { get { return deck.Cards.Take(numberCardsInHand); } }
 
         public Game()

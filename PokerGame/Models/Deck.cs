@@ -7,7 +7,6 @@ namespace PokerGame.Models
 {
     public class Deck
     {
-        private int nextCardIndex = 0;
         public Card[] Cards;
 
         public Deck()
@@ -28,22 +27,8 @@ namespace PokerGame.Models
         public void Shuffle()
         {
             Cards = Cards.OrderBy(n => Guid.NewGuid()).ToArray();
-        }
-
-        public Card NextCard
-        {
-            get
-            {
-                return Cards[++nextCardIndex];
-            }
-
-        }
-        public int CardIndex
-        {
-            set
-            {
-                nextCardIndex = value;
-            }
+            //Cards = Cards.OrderBy(n => n.nRank).ToArray();
+            //Cards = Cards.OrderBy(n => n.nSuit).ToArray();
         }
     }
 }

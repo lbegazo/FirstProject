@@ -1,0 +1,169 @@
+﻿@model IEnumerable<PokerGame.Models.Card>
+
+<script type="text/javascript">
+
+    var cardsList =  @Html.Raw(Json.Encode(Model));
+
+    $(document).ready(function ()
+    {        
+        summaryInit();
+        getSummary();
+    });
+
+    function getSummary()
+    {
+        if (cardsList.length > 0)
+        {
+            var sortedCards = cardsList.sort(compare);
+
+            var groupedCardsByRank = groupBy(sortedCards, function (item)
+            { return [item.nRank]; });
+
+            var groupedCardsBySuit = groupBy(sortedCards, function (item)
+            { return [item.nSuit]; });
+
+            getPairsThreePocker(groupedCardsByRank);
+            getLadder(sortedCards);
+            getColor(groupedCardsBySuit);
+        }
+    }
+
+    function getPairsThreePocker(groupedCardsByRank)
+    {
+        var pairs = 0;
+        var third = 0;
+        var pocker = 0;
+
+        for (var i = 0; i < groupedCardsByRank.length; i++)
+        {
+            if (groupedCardsByRank[i].length == 2)
+            {
+                pairs++;
+            }
+            if (groupedCardsByRank[i].length == 3) {
+                third++;
+            }
+            if (groupedCardsByRank[i].length == 4) {
+                pocker++;
+                pairs = 2;
+                third = 1;
+            }
+        }
+
+        if (pairs > 0)
+        {
+            $('#lblPair').html(pairs);
+        }
+
+        if (third > 0)
+        {
+            $('#lblThree').html("Yes");
+        }
+        if (pocker > 0)
+        {
+            $('#lblPocker').html("Yes");
+        }
+    }
+
+    function getLadder(sortedCards) {
+        var result = false;
+        for (var i = sortedCards.length - 1; i >= 0; i--)
+        {
+            if (i > 0) {
+                if (sortedCards[i].nRank - sortedCards[i - 1].nRank == 1) {
+                    result = true;
+                }
+                else {
+                    result = false;
+                    break;
+                }
+            }
+        }
+
+        if (result) {
+            $('#lblLadder').html("Yes");
+        }
+    }
+
+    function getColor(groupedCardsBySuit)
+    {        
+        if (groupedCardsBySuit.length == 1)
+        {
+            $('#lblColor').html("Yes");
+        }
+    }
+
+    function groupBy(array, f) {
+        var groups = {};
+        array.forEach(function (o) {
+            var group = JSON.stringify(f(o));
+            groups[group] = groups[group] || [];
+            groups[group].push(o);
+        });
+        return Object.keys(groups).map(function (group) {
+            return groups[group];
+        })
+    }
+
+    function compare(a, b) {
+        if (a.nRank < b.nRank)
+            return -1;
+        if (a.nRank > b.nRank)
+            return 1;
+        return 0;
+    }
+
+    function summaryInit() {
+        $('#lblPair').html(0);
+        $('#lblThree').html("No");
+        $('#lblPocker').html("No");
+        $('#lblLadder').html("No");
+        $('#lblColor').html("No");
+    }
+
+</script>
+
+
+<div class="row text-center" style="display: flex;flex-wrap: wrap;">
+    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2 col-md-offset-1">
+        <img class="img-responsive" src="@Url.Content(Model.ElementAt(0).ImagePath)" />
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+        <img class="img-responsive" src="@Url.Content(Model.ElementAt(1).ImagePath)" />
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+        <img class="img-responsive" src="@Url.Content(Model.ElementAt(2).ImagePath)" />
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+        <img class="img-responsive" src="@Url.Content(Model.ElementAt(3).ImagePath)" />
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+        <img class="img-responsive" src="@Url.Content(Model.ElementAt(4).ImagePath)" />
+    </div>
+</div>
+<div style="height:30px">
+</div>
+<div class="row text-center" style="width:100%; background-color:cadetblue">
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="lblPair">How many pairs are there?</label>
+            <label id="lblPair" class="form-control"></label>
+        </div>
+        <div class="form-group">
+            <label for="lblThree">Is there a three of kind?</label>
+            <label id="lblThree" name="lblTrio" class="form-control"></label>
+        </div>
+        <div class="form-group">
+            <label for="lblLadder">Is there a ladder?</label>
+            <label id="lblLadder" name="lblLadder" class="form-control"></label>
+        </div>
+        <div class="form-group">
+            <label for="lblPocker">Is there a pocker?</label>
+            <label id="lblPocker" name="lblPocker" class="form-control"></label>
+        </div>
+        <div class="form-group">
+            <label for="lblColor">Is there a color?</label>
+            <label id="lblColor" name="lblColor" class="form-control"></label>
+        </div>
+    </form>
+</div>

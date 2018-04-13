@@ -1,0 +1,58 @@
+﻿@model PokerGame.Models.Game
+@{
+    ViewBag.Title = "Poker";
+}
+
+<style>
+    .jumbotron {
+        background: #A5C0C9;
+    }
+
+    .row text-center {
+        background: #A5C0C9;
+    }
+</style>
+
+<script type="text/javascript">
+    
+    var cardsList =  @Html.Raw(Json.Encode(Model.CardsInHand));
+
+    $(document).ready(function () {        
+
+        $('#btnNewGameFirst').click(function () {            
+            $.ajax({
+                url: '@Url.Action("shuffleCards","Home")',
+                type: 'POST',
+                dataType: "html",
+                success: function (result)
+                {
+                    $('#dImages').html(result);
+                    getSummary();
+                }
+            });
+        });
+    });   
+</script>
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="row text-center">
+            <h1>Welcome to Poker Game</h1>
+            <p>
+                <button id="btnNewGameFirst" class="btn btn-primary btn-lg">New Game</button>
+            </p>
+        </div>
+    </header>
+    <div id="dImages" class="row text-center" >
+        @{Html.RenderPartial("~/Views/Home/Cards.cshtml", Model.CardsInHand, ViewData);}
+    </div>    
+</div>
+
+
+
+
+
+
+
+
+
