@@ -1,11 +1,5 @@
 ﻿@model IEnumerable<PokerGame.Models.Card>
 
-<style>
-    .colorPanel {
-        background: #A5C0C9;
-    }
-</style>
-
 <script type="text/javascript">
 
     var cardsList =  @Html.Raw(Json.Encode(Model));
