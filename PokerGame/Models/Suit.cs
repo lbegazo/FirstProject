@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace PokerGame.Models
-{
+{        
     public enum Suit
     {
         clubs = 1,

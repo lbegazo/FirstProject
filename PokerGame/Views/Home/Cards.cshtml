@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<PokerGame.Models.Card>
 
+<style>
+    .colorPanel {
+        background: #A5C0C9;
+    }
+</style>
+
 <script type="text/javascript">
 
     var cardsList =  @Html.Raw(Json.Encode(Model));
@@ -143,7 +149,7 @@
 </div>
 <div style="height:30px">
 </div>
-<div class="row text-center" style="width:100%; background-color:cadetblue">
+<div class="row text-center colorPanel" style="width:100%;">
     <form class="form-inline">
         <div class="form-group">
             <label for="lblPair">How many pairs are there?</label>
