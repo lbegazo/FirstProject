@@ -27,8 +27,6 @@ namespace PokerGame.Models
         public void Shuffle()
         {
             Cards = Cards.OrderBy(n => Guid.NewGuid()).ToArray();
-            //Cards = Cards.OrderBy(n => n.nRank).ToArray();
-            //Cards = Cards.OrderBy(n => n.nSuit).ToArray();
         }
     }
 }
